@@ -149,7 +149,7 @@ requests.delete(f"{BASE_URL}/api/v1/trackers/{session_id}")
 To run the FastAPI microservice using `uv` and `uvicorn`:
 
 ```bash
-uv run uvicorn mht_service.services.api:app --host 0.0.0.0 --port 8000 --reload
+uv run python main.py
 ```
 
 Interactive API documentation (Swagger UI / OpenAPI) is available at:
