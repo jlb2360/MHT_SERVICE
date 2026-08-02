@@ -1,0 +1,87 @@
+[project]
+name = "mht-service"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "pydantic",
+    "pydantic-settings",
+    "numpy",
+    "scipy",
+    "uvicorn>=0.52.1",
+    "requests>=2.34.2",
+    "matplotlib>=3.10.9",
+    "bokeh>=3.9.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "hypothesis",
+    "httpx",
+    "mypy",
+    "ruff"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+# Enforce verbosity, coverage, and strict markers by default
+addopts = "-v --cov=src --cov-report=term-missing --cov-fail-under=90 --strict-markers"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+# Catch silent mathematical deprecations or floating-point warnings as errors
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:pydantic.*",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+# Crucial plugins for tracking matrix shapes and strict API schemas
+plugins = [
+    "pydantic.mypy",
+    "numpy.typing.mypy_plugin"
+]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+# Assume Python 3.10+ features are always available
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort (import sorting)
+    "C4",  # flake8-comprehensions
+    "B",   # flake8-bugbear (catches common bugs)
+    "UP",  # pyupgrade (forces modern syntax)
+    "N",   # pep8-naming
+    "SIM", # flake8-simplify
+]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
